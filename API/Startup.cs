@@ -1,6 +1,6 @@
 using Core.Interfaces;
 using Infrastructure.Data;
-using Infrastructure.Repositories;
+using Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
