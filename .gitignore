@@ -456,3 +456,7 @@ $RECYCLE.BIN/
 ###
 
 appsettings.json
+
+ecommerce.db
+ecommerce.db-shm
+ecommerce.db-wal
