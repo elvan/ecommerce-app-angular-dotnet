@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using AutoMapper;
@@ -36,16 +35,7 @@ namespace API.Controllers
             ProductWithTypesAndBrandsSpecification spec = new();
             IReadOnlyList<Product> products = await _productRepo.ListAsync(spec);
 
-            return Ok(products.Select(product => new ProductToReturnDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                PictureUrl = product.PictureUrl,
-                ProductType = product.ProductType.Name,
-                ProductBrand = product.ProductBrand.Name
-            }).ToList());
+            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
         }
 
         [HttpGet("{id}")]
