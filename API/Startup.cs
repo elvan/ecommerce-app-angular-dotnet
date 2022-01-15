@@ -1,5 +1,6 @@
 using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,7 @@ namespace API
         {
             _ = services.AddControllers();
 
-            _ = services.AddScoped<IProductRepository, ProductRepository>();
+            _ = services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             _ = services.AddDbContext<StoreContext>(options =>
             {
                 _ = options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
