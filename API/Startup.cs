@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,10 +23,13 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             _ = services.AddControllers();
+
+            _ = services.AddScoped<IProductRepository, ProductRepository>();
             _ = services.AddDbContext<StoreContext>(options =>
             {
                 _ = options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
+
             _ = services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -43,11 +47,8 @@ namespace API
             }
 
             _ = app.UseHttpsRedirection();
-
             _ = app.UseRouting();
-
             _ = app.UseAuthorization();
-
             _ = app.UseEndpoints(endpoints =>
             {
                 _ = endpoints.MapControllers();
