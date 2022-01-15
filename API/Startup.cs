@@ -1,3 +1,5 @@
+using API.Helpers;
+using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
@@ -25,7 +27,10 @@ namespace API
         {
             _ = services.AddControllers();
 
+            _ = services.AddScoped<IProductRepository, ProductRepository>();
             _ = services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            _ = services.AddAutoMapper(typeof(MappingProfiles));
+
             _ = services.AddDbContext<StoreContext>(options =>
             {
                 _ = options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
