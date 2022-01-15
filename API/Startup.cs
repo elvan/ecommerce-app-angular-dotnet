@@ -53,8 +53,13 @@ namespace API
             }
 
             _ = app.UseHttpsRedirection();
+
             _ = app.UseRouting();
+
+            _ = app.UseStaticFiles();
+
             _ = app.UseAuthorization();
+
             _ = app.UseEndpoints(endpoints =>
             {
                 _ = endpoints.MapControllers();
