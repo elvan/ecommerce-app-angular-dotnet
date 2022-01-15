@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
@@ -25,21 +27,39 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
         {
             ProductWithTypesAndBrandsSpecification spec = new();
             IReadOnlyList<Product> products = await _productRepo.ListAsync(spec);
 
-            return Ok(products);
+            return Ok(products.Select(product => new ProductToReturnDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                PictureUrl = product.PictureUrl,
+                ProductType = product.ProductType.Name,
+                ProductBrand = product.ProductBrand.Name
+            }).ToList());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             ProductWithTypesAndBrandsSpecification spec = new(id);
             Product product = await _productRepo.GetEntityWithSpec(spec);
 
-            return Ok(product);
+            return Ok(new ProductToReturnDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                PictureUrl = product.PictureUrl,
+                ProductType = product.ProductType.Name,
+                ProductBrand = product.ProductBrand.Name
+            });
         }
 
         [HttpGet("brands")]
