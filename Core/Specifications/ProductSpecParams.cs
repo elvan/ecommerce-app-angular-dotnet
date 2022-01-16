@@ -16,8 +16,16 @@ namespace Core.Specifications
 
         public string Sort { get; set; }
 
+        public string Search
+        {
+            get => _search;
+            set => _search = value.ToLower();
+        }
+
         private const int MaxPageSize = 20;
 
         private int _pageSize = 6;
+
+        private string _search;
     }
 }
