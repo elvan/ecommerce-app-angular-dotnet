@@ -30,13 +30,10 @@ namespace API.Controllers
             throw new Exception("This is a server error");
         }
 
-        [HttpGet("validation-error")]
-        public ActionResult GetValidationError()
+        [HttpGet("invalid-reference/{id}")]
+        public ActionResult GetInvalidReference(int id)
         {
-            ModelState.AddModelError("Problem1", "This is the first error");
-            ModelState.AddModelError("Problem2", "This is the second error");
-            return ValidationProblem();
+            return Ok();
         }
-
     }
 }

@@ -1,3 +1,5 @@
+using System.Linq;
+using API.Errors;
 using API.Helpers;
 using API.Middleware;
 using AutoMapper;
@@ -6,6 +8,7 @@ using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +34,25 @@ namespace API
             _ = services.AddScoped<IProductRepository, ProductRepository>();
             _ = services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             _ = services.AddAutoMapper(typeof(MappingProfiles));
+
+            _ = services.Configure<ApiBehaviorOptions>(options =>
+              {
+                  options.InvalidModelStateResponseFactory = actionContext =>
+                  {
+                      string[] errors = actionContext.ModelState
+                          .Where(e => e.Value.Errors.Count > 0)
+                          .SelectMany(x => x.Value.Errors)
+                          .Select(x => x.ErrorMessage)
+                          .ToArray();
+
+                      ApiValidationErrorResponse errorResponse = new ApiValidationErrorResponse
+                      {
+                          Errors = errors
+                      };
+
+                      return new BadRequestObjectResult(errorResponse);
+                  };
+              });
 
             _ = services.AddDbContext<StoreContext>(options =>
             {
