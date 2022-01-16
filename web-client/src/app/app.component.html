@@ -2,4 +2,10 @@
 
 <div class="container-lg" style="margin-top: 140px">
   <h1>Welcome to {{ title }}</h1>
+
+  <ul>
+    <li *ngFor="let product of products" class="li-unstyled">
+      <a [routerLink]="['/products/', product.id]">{{ product.name }}</a>
+    </li>
+  </ul>
 </div>
