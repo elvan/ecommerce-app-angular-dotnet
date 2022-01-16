@@ -1,4 +1,5 @@
 using API.Helpers;
+using API.Middleware;
 using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
@@ -45,9 +46,11 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            _ = app.UseMiddleware<ExceptionMiddleware>();
+
             if (env.IsDevelopment())
             {
-                _ = app.UseDeveloperExceptionPage();
+                // _ = app.UseDeveloperExceptionPage();
                 _ = app.UseSwagger();
                 _ = app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
