@@ -25,7 +25,14 @@
     <div class="mb-3">
       <h5 class="text-info mb-2">Brands</h5>
       <ul class="list-group">
-        <li *ngFor="let brand of brands" class="list-group-item">
+        <li
+          *ngFor="let brand of brands"
+          [class.active]="brand.id === brandIdSelected"
+          [value]="brand.id"
+          (click)="onBrandSelected(brand.id)"
+          class="list-group-item"
+          style="cursor: pointer"
+        >
           {{ brand.name }}
         </li>
       </ul>
@@ -34,7 +41,14 @@
     <div class="mb-3">
       <h5 class="text-info mb-2">Types</h5>
       <ul class="list-group">
-        <li *ngFor="let type of types" class="list-group-item">
+        <li
+          *ngFor="let type of types"
+          [class.active]="type.id === typeIdSelected"
+          [value]="type.id"
+          (click)="onTypeSelected(type.id)"
+          class="list-group-item"
+          style="cursor: pointer"
+        >
           {{ type.name }}
         </li>
       </ul>
