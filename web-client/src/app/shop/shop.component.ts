@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IProduct } from '../shared/models/product';
 import { IProductBrand } from '../shared/models/product-brand';
@@ -27,7 +28,10 @@ export class ShopComponent implements OnInit {
     { name: 'Price: High to Low', value: 'priceDesc' },
   ];
 
-  constructor(private shopService: ShopService) {}
+  constructor(
+    private shopService: ShopService,
+    private readonly viewport: ViewportScroller
+  ) {}
 
   ngOnInit(): void {
     this.getProducts();
@@ -50,7 +54,7 @@ export class ShopComponent implements OnInit {
       }
     );
 
-    window.scrollTo(0, 0);
+    this.viewport.scrollToPosition([0, 0]);
   }
 
   getProductBrands(): void {
