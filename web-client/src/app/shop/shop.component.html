@@ -15,10 +15,13 @@
 
     <div class="mb-3">
       <h5 class="text-info">Sorting</h5>
-      <select class="custom-select" name="" id="">
-        <option value="" selected>Alphabetical</option>
-        <option value="">Price: Low to High</option>
-        <option value="">Price: High to Low</option>
+      <select
+        (change)="onSortSelected($event.target.value)"
+        class="custom-select"
+      >
+        <option *ngFor="let sort of sortOptions" [value]="sort.value">
+          {{ sort.name }}
+        </option>
       </select>
     </div>
 
