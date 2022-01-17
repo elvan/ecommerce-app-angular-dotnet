@@ -49,6 +49,8 @@ export class ShopComponent implements OnInit {
         console.log(error);
       }
     );
+
+    window.scrollTo(0, 0);
   }
 
   getProductBrands(): void {
