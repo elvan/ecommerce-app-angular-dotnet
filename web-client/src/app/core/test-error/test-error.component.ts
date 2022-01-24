@@ -14,6 +14,39 @@ export class TestErrorComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  get400Error() {
+    this.http.get(this.baseUrl + 'buggy/bad-request').subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  get401Error() {
+    this.http.get(this.baseUrl + 'buggy/unauthorised').subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  get400ValidationError() {
+    this.http.get(this.baseUrl + 'products/invalid-id').subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   get404Error() {
     this.http.get(this.baseUrl + 'products/00').subscribe(
       (response) => {
@@ -27,28 +60,6 @@ export class TestErrorComponent implements OnInit {
 
   get500Error() {
     this.http.get(this.baseUrl + 'buggy/server-error').subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  get400Error() {
-    this.http.get(this.baseUrl + 'buggy/bad-request').subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  getValidationError() {
-    this.http.get(this.baseUrl + 'products/invalid-id').subscribe(
       (response) => {
         console.log(response);
       },
